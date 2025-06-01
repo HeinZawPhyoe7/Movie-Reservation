@@ -1,3 +1,9 @@
+type Period = {
+  day: string;
+  title: string;
+  id: number;
+};
+
 export type Movie = {
   title: string;
   description: string;
@@ -5,6 +11,8 @@ export type Movie = {
   genere: string;
   cinema_name: string;
   cinema_place: string;
+  period_time: string;
+  list_period: Period[];
   first_time: string;
   second_time: string;
   third_time: string;

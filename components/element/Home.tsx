@@ -10,16 +10,16 @@ import { useRouter } from "next/navigation";
 const Home = () => {
   const [isInputShow, setIsInputShow] = useState(false);
 
-  const [detail, setDetail] = useState<MovieT[]>([]);
+  const [movie, setMovie] = useState<MovieT[]>([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/detail/getall`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/movie/getall`
         );
 
-        setDetail(response.data.detail);
+        setMovie(response.data.movie);
       } catch (error) {
         console.error("Error fetching movie details:", error);
       }
@@ -45,20 +45,20 @@ const Home = () => {
           )}
         </div>
         <div className="">
-          <Tabs defaultValue="account" className="w-[400px]">
+          <Tabs defaultValue="playing" className="w-[400px]">
             <TabsList>
               <TabsTrigger value="playing">Now Playing</TabsTrigger>
-              <TabsTrigger value="comming">Comming Soon</TabsTrigger>
+              <TabsTrigger value="coming">Coming Soon</TabsTrigger>
             </TabsList>
             <TabsContent value="playing">
-              {detail.map((movie: MovieT, index: number) => (
+              {movie.map((movie: MovieT, id: number) => (
                 <div
-                  key={index}
-                  className="space-y-2"
+                  key={movie.id}
+                  className="space-y-1"
                   onClick={() => handleRedirect(movie.id)}
                 >
                   <img
-                    src={`data:image/jpeg;base64,${JSON.parse(movie.images)}`}
+                    src={`data:image/jpeg;base64,${movie.images}`}
                     alt={movie.title}
                     className="w-96 h-96 rounded cursor-pointer hover:opacity-80 transition"
                   />
@@ -77,9 +77,7 @@ const Home = () => {
                 </div>
               </div>
             </TabsContent>
-            <TabsContent value="comming">
-              Change your password here.
-            </TabsContent>
+            <TabsContent value="coming">Change your password here.</TabsContent>
           </Tabs>
         </div>
       </div>

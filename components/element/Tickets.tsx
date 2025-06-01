@@ -15,7 +15,7 @@ const Tickets = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/detail/getall`
         );
-
+        console.log("response.data.detail", response.data.detail);
         setDetail(response.data.detail);
       } catch (error) {
         console.error("Error fetching movie details:", error);
@@ -29,7 +29,7 @@ const Tickets = () => {
       <div className="space-y-4">
         <h2>The Midnight Bloom</h2>
         <div>
-          <Tabs defaultValue="account" className="w-[400px]">
+          <Tabs defaultValue="showtimes" className="w-[400px]">
             <TabsList>
               <TabsTrigger value="showtimes">Showtimes</TabsTrigger>
               <TabsTrigger value="details">Details</TabsTrigger>
