@@ -4,6 +4,7 @@ import { MovieDetailT } from "@/lib/types/HomeTypes";
 import { Movie } from "@/lib/types/TicketTypes";
 import axios from "axios";
 import { MapPin } from "lucide-react";
+import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Booking = ({ movieId }: { movieId: string }) => {
@@ -22,7 +23,7 @@ const Booking = ({ movieId }: { movieId: string }) => {
       }
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/movie/detail/getall`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/movie/detail/show/${movieId}`
         );
 
         setDetail(response.data.movie_details);
@@ -33,6 +34,10 @@ const Booking = ({ movieId }: { movieId: string }) => {
 
     fetchMovie();
   }, [movieId]);
+
+  const handleChooseSeat = () => {
+    redirect("/seat");
+  };
 
   return (
     <div className="space-y-4">
@@ -54,6 +59,7 @@ const Booking = ({ movieId }: { movieId: string }) => {
                 <div
                   className="flex justify-between items-center"
                   key={time.id}
+                  onClick={handleChooseSeat}
                 >
                   <p>{time.time}</p>
                   <p className="bg-gray-600 p-1 w-20 text-center rounded-2xl">
